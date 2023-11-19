@@ -14,8 +14,8 @@
 }
 
 .App-header {
-  background-color: #118888e0;
-  min-height: 100vh;
+  background-color: #050707e0;
+  min-height: 10vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -24,21 +24,67 @@
   color: white;
 }
 
-.container {
-  width: 50rem;
-  border: 1px solid transparent;
-  border-radius: 0.25rem;
-}
-
-.timer-work {
+.App-body-work {
   background-color: #b91a1a;
-  min-height: 100vh;
+  min-height: 80vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  padding-top: 24px;
   font-size: calc(10px + 2vmin);
   color: white;
+}
+
+.App-body-shortBreak {
+  background-color: #1a5ab9;
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 24px;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-body-longBreak {
+  background-color: #048f39;
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 24px;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.Timer-container-work {
+  background-color: #d84848;
+  border-radius: 5px;
+  &:hover {
+    cursor: pointer;
+  }
+  padding: 12px;
+  padding-top: 6px;
+}
+
+.Timer-container-shortBreak {
+  background-color: #4078cc;
+  border-radius: 5px;
+  &:hover {
+    cursor: pointer;
+  }
+  padding: 12px;
+  padding-top: 6px;
+}
+
+.Timer-container-longBreak {
+  background-color: #2bc466;
+  border-radius: 5px;
+  &:hover {
+    cursor: pointer;
+  }
+  padding: 12px;
+  padding-top: 6px;
 }
 
 .App-link {

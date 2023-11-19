@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
+import "./Timer.css";
 
-const Timer = () => {
+const Timer = ({ timerValue }) => {
   // We need ref in this, because we are dealing
   // with JS setInterval to keep track of it and
   // stop it when needed
@@ -8,6 +9,7 @@ const Timer = () => {
 
   // The state for our timer
   const [timer, setTimer] = useState("00:00:00");
+  const [running, setRunning] = useState(false);
 
   const getTimeRemaining = (e) => {
     const total = Date.parse(e) - Date.parse(new Date());
@@ -22,7 +24,7 @@ const Timer = () => {
     };
   };
 
-  const startTimer = (e) => {
+  const runTimer = (e) => {
     let { total, hours, minutes, seconds } = getTimeRemaining(e);
     if (total >= 0) {
       // update the timer
@@ -38,20 +40,28 @@ const Timer = () => {
     }
   };
 
-  const clearTimer = (e) => {
+  const startTimer = (deadTime) => {
+    const id = setInterval(() => {
+      runTimer(deadTime);
+    }, 1000);
+    Ref.current = id;
+  };
+
+  const stopTimer = () => {
+    if (Ref.current) clearInterval(Ref.current);
+  };
+
+  const clearTimer = (deadTime) => {
     // If you adjust it you should also need to
     // adjust the Endtime formula we are about
     // to code next
-    setTimer("00:00:10");
+    setTimer("Timer starting...");
 
     // If you try to remove this line the
     // updating of timer Variable will be
     // after 1000ms or 1sec
-    if (Ref.current) clearInterval(Ref.current);
-    const id = setInterval(() => {
-      startTimer(e);
-    }, 1000);
-    Ref.current = id;
+    stopTimer();
+    startTimer(deadTime);
   };
 
   const getDeadTime = () => {
@@ -59,7 +69,8 @@ const Timer = () => {
 
     // This is where you need to adjust if
     // you entend to add more time
-    deadline.setSeconds(deadline.getSeconds() + 10);
+    deadline.setSeconds(deadline.getSeconds() + timerValue);
+
     return deadline;
   };
 
@@ -68,9 +79,10 @@ const Timer = () => {
 
   // We put empty array to act as componentDid
   // mount only
-  useEffect(() => {
-    clearTimer(getDeadTime());
-  }, []);
+
+  // useEffect(() => {
+  //   clearTimer(getDeadTime());
+  // }, [timerValue]);
 
   // Another way to call the clearTimer() to start
   // the countdown is via action event from the
@@ -80,10 +92,25 @@ const Timer = () => {
     clearTimer(getDeadTime());
   };
 
+  const toggleTimer = () => {
+    if (running) {
+      clearInterval(Ref.current);
+    } else {
+      const id = setInterval(() => {
+        runTimer(getDeadTime());
+      }, 1000);
+      Ref.current = id;
+    }
+
+    setRunning(!running); // Toggle the running state
+  };
   return (
     <div className="Timer">
-      <h2>{timer}</h2>
+      <div className="timerNumbers">{timer}</div>
+      <button onClick={toggleTimer}>{running ? "Stop" : "Start"}</button>
       <button onClick={onClickReset}>Reset</button>
+      <button onClick={() => clearTimer(getDeadTime())}>Start</button>
+      <button onClick={stopTimer}>Stop</button>
     </div>
   );
 };
