@@ -1,7 +1,7 @@
 import "./App.css";
 import { Button, Group, Divider } from "@mantine/core";
 import Timer from "./Timer";
-import Learning from "./Learning";
+import AppHeader from "./AppHeader";
 import { useState } from "react";
 import TasksList from "./TasksList";
 
@@ -44,47 +44,49 @@ export default function App() {
     setTimerType(timerTypes.longBreak);
   }
 
-  Learning();
-
   return (
     <div className="App">
-      <header className="App-header">
-        <h1>Pomodoro</h1>
+      <header>
+        <AppHeader timerType={timerType} />
       </header>
       <div className={`App-body-${timerType}`}>
-        <div>
-          <Group gap="xs">
-            <Button
-              variant="filled"
-              color="red"
-              size="md"
-              radius="md"
-              onClick={workClick}
-            >
-              Work
-            </Button>
-            <Button
-              variant="filled"
-              color="blue"
-              size="md"
-              radius="md"
-              onClick={shortBreakClick}
-            >
-              Short Break
-            </Button>
-            <Button
-              variant="filled"
-              color="green"
-              size="md"
-              radius="md"
-              onClick={longBreakClick}
-            >
-              Long Break
-            </Button>
-          </Group>
+        <div className={timerContainerClassNames[timerType]}>
+          <div>
+            <Group position="center" gap="m">
+              <Button
+                compact
+                variant="subtle"
+                color="dark"
+                size="md"
+                radius="md"
+                onClick={workClick}
+              >
+                Work
+              </Button>
+              <Button
+                compact
+                variant="subtle"
+                color="dark"
+                size="md"
+                radius="md"
+                onClick={shortBreakClick}
+              >
+                Short Break
+              </Button>
+              <Button
+                compact
+                variant="subtle"
+                color="dark"
+                size="md"
+                radius="md"
+                onClick={longBreakClick}
+              >
+                Long Break
+              </Button>
+            </Group>
 
-          <Divider my="sm" />
-          <div className={timerContainerClassNames[timerType]}>
+            <Divider my="sm" />
+
             <Timer timerValue={minutes[timerType]} />
 
             {motivationalNote[timerType]}

@@ -1,11 +1,24 @@
-import { Input, Button, Popover, TextInput, Modal, Stack } from "@mantine/core";
-// import { IconHeart } from "@tabler/icons-react";
+import "./App.css";
+import {
+  Button,
+  Popover,
+  TextInput,
+  Modal,
+  Stack,
+  Group,
+  Text,
+} from "@mantine/core";
 import { useState } from "react";
 import { useDisclosure } from "@mantine/hooks";
 import TaskListItem from "./TaskListItem";
+import { IconChecklist } from "@tabler/icons-react";
+
+// KLAUSIMAI: 1. Kuo skirasi useState ir useDisclosure?
+//Eventas (e) yra objektas. Jis kaip objektas turi parametrus ir values
+// PASIŽIŪRĖTI OPERATORIUS BŪTINAI: && (and); || (or);
+// Edgecase?
 
 function TasksList() {
-  const [opened, { open, close }] = useDisclosure(false);
   // const [boolean reikšmė, {objektas su open ir close properčiais, iš pavadinimų galima nuspėti, kad bus funkcijos}] <- [laužtinis skliaustas indikuoja masyvą su dviem elementais]
   // const modalHandler = useDisclosure(false); <- kitas būdas kaip parašyti 8 eilutę
   // useDisclosure(false) užnaudija hooką ir uždefinina modalo state
@@ -15,18 +28,22 @@ function TasksList() {
   const [tasks, setTasks] = useState([]);
   // [state, funkcija, kuri leidžia nustatyti state]
   const [inputValue, setInputValue] = useState("");
-  const [newInput, setNewInputValue] = useState(inputValue);
+  const [toggle, setToggle] = useState(false);
+  const [isError, setIsError] = useState(false);
 
   const handleOnInputValueChange = (event) => {
-    console.log(event);
+    console.log(event); //kam šita eilutė reikalinga?
+    if (event.target.value === "") {
+      setIsError(true);
+    } else {
+      setIsError(false);
+    }
     setInputValue(event.target.value);
   };
 
-  const handleCreateClick = (event) => {
-    console.log(event);
-    console.log(event.target);
+  const handleCreateClick = () => {
     if (inputValue === "") {
-      alert("Please insert a task!");
+      setIsError(true);
       return;
     }
     setTasks([...tasks, inputValue]);
@@ -41,26 +58,44 @@ function TasksList() {
     setTasks(newTaskList);
   };
 
-  const handleEditClick = (index) => {
-    setNewInputValue(inputValue);
+  const handleTaskEdit = (index, value) => {
+    const newTaskList = [...tasks];
+    newTaskList[index] = value;
+    setTasks(newTaskList);
   };
 
-  console.log(tasks);
+  // const handleSaveClick = (value) => {
+  //   handleTaskEdit(index, value);
+  // }
+
+  const handlePopoverClose = () => {
+    popoverClose();
+    setInputValue("");
+    setIsError(false);
+  };
+
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      handleCreateClick();
+    }
+  };
 
   return (
     <div>
       <Stack>
-        {tasks.map((task, index) => (
-          <TaskListItem
-            taskTitle={task}
-            onDeleteClick={() => handleTaskDeletion(index)}
-            onEditClick={() => handleEditClick()}
-          />
-        ))}
+        <div>
+          {tasks.map((task, index) => (
+            <TaskListItem
+              taskTitle={task}
+              onDeleteClick={() => handleTaskDeletion(index)}
+              onSaveClick={(value) => handleTaskEdit(index, value)}
+            />
+          ))}
+        </div>
       </Stack>
       <Popover
         opened={popoverOpened}
-        onClose={popoverClose}
+        onClose={handlePopoverClose}
         width={300}
         trapFocus
         position="bottom"
@@ -72,56 +107,62 @@ function TasksList() {
           <Button onClick={popoverOpen}>Add task</Button>
         </Popover.Target>
         <Popover.Dropdown>
+          <Text fz="xs" ta="center" c="black" fw={500}>
+            What are you working on?{" "}
+          </Text>
+          <p></p>
           <TextInput
-            label="Name"
             size="xs"
             placeholder="Enter your task"
             value={inputValue}
+            icon={<IconChecklist />}
+            error={isError ? " " : undefined}
             onChange={handleOnInputValueChange}
+            onKeyDown={handleKeyDown}
           />
+          {isError && (
+            <Text fz="xs" color="red" ta="left">
+              Please insert your task name
+            </Text>
+          )}
           <p></p>
-          <Button
-            onClick={handleCreateClick}
-            variant="outline"
-            color="red" // kodėl spalva nepasikeičia į baltą? nei "white" įrašius, nei rgb - SOLVED
-            size="xs"
-            radius="md"
-          >
-            Create
-          </Button>
-          <Button onClick={popoverClose}>Close</Button>
+          <Group position="center">
+            <Button
+              onClick={handleCreateClick}
+              compact
+              variant="subtle"
+              color="dark"
+              size="xs"
+              radius="md"
+              disabled={isError}
+            >
+              Create
+            </Button>
+            <Button
+              onClick={handlePopoverClose}
+              compact
+              variant="subtle"
+              color="dark"
+              size="xs"
+              radius="md"
+            >
+              Close
+            </Button>
+          </Group>
         </Popover.Dropdown>
       </Popover>
       <p></p>
+
       <div>
-        <Modal opened={opened} onClose={close} title="Enter task">
-          {/* <Modal opened={modalHandler[0]} onClose={modalHandler[1].close} title="Enter task"></Modal> */}
-          <TextInput
-            label="Name"
-            size="xs"
-            placeholder="Enter your task"
-            value={inputValue}
-            onChange={handleOnInputValueChange}
-          />
-          <p></p>
-          <Button
-            onClick={handleCreateClick}
-            variant="outline"
-            color="red" // kodėl spalva nepasikeičia į baltą? nei "white" įrašius, nei rgb - SOLVED
-            size="xs"
-            radius="md"
-          >
-            Create
+        <Group>
+          <Button onClick={() => setToggle(!toggle)}>
+            Toggle Dropdown Markup
           </Button>
-        </Modal>
-        <Button color="teal" onClick={open}>
-          Add task
-        </Button>
+          {toggle && <Button>This is a button</Button>}
+        </Group>
       </div>
     </div>
   );
 }
 
 export default TasksList;
-
-//<Button leftSection={<IconHeart size={14} />} variant="default">Add task</Button>
