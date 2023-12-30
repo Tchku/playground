@@ -14,6 +14,7 @@ export default function Root() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
+          <Route path="home" element={<Home />} />
           <Route path="settings" element={<Settings />} />
         </Route>
       </Routes>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useTimer } from "react-timer-hook";
 import "./Timer.css";
 
@@ -17,10 +17,21 @@ function Timer({ timerValue }) {
   } = useTimer({
     timerValue,
     onExpire: () => console.warn("onExpire called"),
+    autoStart: false,
   });
 
-  const time = new Date();
-  time.setSeconds(10);
+  useEffect(() => {
+    restartTimer(false);
+  }, [timerValue]);
+
+  const restartTimer = (autoStart) => {
+    const time = new Date();
+    time.setSeconds(time.getSeconds() + timerValue);
+    restart(time, autoStart);
+  };
+
+  // const time = new Date();
+  // time.setSeconds(10);
 
   return (
     <div className="Timer">
@@ -32,16 +43,7 @@ function Timer({ timerValue }) {
       <button onClick={start}>Start</button>
       <button onClick={pause}>Pause</button>
       <button onClick={resume}>Resume</button>
-      <button
-        onClick={() => {
-          // Restarts to 5 minutes timer
-          const time = new Date();
-          time.setSeconds(time.getSeconds() + 300);
-          restart(time);
-        }}
-      >
-        Restart
-      </button>
+      <button onClick={restartTimer}>Restart</button>
     </div>
   );
 }

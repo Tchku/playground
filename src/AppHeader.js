@@ -1,5 +1,6 @@
 import "./AppHeader.css";
 import { Button, Group, Divider } from "@mantine/core";
+import { Link } from "react-router-dom";
 
 export default function AppHeader({ timerType }) {
   return (
@@ -9,11 +10,11 @@ export default function AppHeader({ timerType }) {
           CompanyLogo
         </a>
         <div className="header-right">
-          <a className="active" href="#home">
+          <a className="active" href="/home">
             Home
           </a>
-          <a href="/settings">Settings</a>
-          <a href="#about">About</a>
+          <Link to="/settings">Settings</Link>
+          <Link to="#about">About</Link>
         </div>
       </div>
     </div>
