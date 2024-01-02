@@ -1,24 +1,15 @@
 import React, { useEffect } from "react";
 import { useTimer } from "react-timer-hook";
 import "./Timer.css";
+import { Button, Group } from "@mantine/core";
 
 function Timer({ timerValue }) {
-  const {
-    totalSeconds,
-    seconds,
-    minutes,
-    hours,
-    days,
-    isRunning,
-    start,
-    pause,
-    resume,
-    restart,
-  } = useTimer({
-    timerValue,
-    onExpire: () => console.warn("onExpire called"),
-    autoStart: false,
-  });
+  const { seconds, minutes, hours, isRunning, start, pause, resume, restart } =
+    useTimer({
+      timerValue,
+      onExpire: () => console.warn("onExpire called"),
+      autoStart: false,
+    });
 
   useEffect(() => {
     restartTimer(false);
@@ -30,20 +21,53 @@ function Timer({ timerValue }) {
     restart(time, autoStart);
   };
 
-  // const time = new Date();
-  // time.setSeconds(10);
-
   return (
     <div className="Timer">
       <div className="timerNumbers">
-        <span>{days}</span>:<span>{hours}</span>:<span>{minutes}</span>:
-        <span>{seconds}</span>
+        <span>{hours}</span>:<span>{minutes}</span>:<span>{seconds}</span>
       </div>
-      <p>{isRunning ? "Running" : "Not running"}</p>
-      <button onClick={start}>Start</button>
-      <button onClick={pause}>Pause</button>
-      <button onClick={resume}>Resume</button>
-      <button onClick={restartTimer}>Restart</button>
+      <Group position="center">
+        <Button
+          variant="subtle"
+          color="dark"
+          radius="xs"
+          size="xs"
+          compact
+          onClick={start}
+        >
+          Start
+        </Button>
+        <Button
+          variant="subtle"
+          color="dark"
+          radius="xs"
+          size="xs"
+          compact
+          onClick={pause}
+        >
+          Pause
+        </Button>
+        <Button
+          variant="subtle"
+          color="dark"
+          radius="xs"
+          size="xs"
+          compact
+          onClick={resume}
+        >
+          Resume
+        </Button>
+        <Button
+          variant="subtle"
+          color="dark"
+          radius="xs"
+          size="xs"
+          compact
+          onClick={restartTimer}
+        >
+          Restart
+        </Button>
+      </Group>
     </div>
   );
 }

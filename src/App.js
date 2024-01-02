@@ -1,9 +1,17 @@
 import "./App.css";
 import { Button, Group, Divider } from "@mantine/core";
+// import styled from "@emotion/styled";
 import Timer from "./Timer";
 import AppHeader from "./AppHeader";
 import { useState } from "react";
 import TasksList from "./TasksList";
+
+// const Button = styled(MantineButton)`
+//   &:hover {
+//     color: red;
+//     background-color: blue;
+//   }
+// `;
 
 const timerTypes = {
   work: "work",
@@ -56,7 +64,7 @@ export default function App() {
               <Button
                 compact
                 variant="subtle"
-                color="dark"
+                color="gray.0"
                 size="md"
                 radius="md"
                 onClick={workClick}
