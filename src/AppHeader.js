@@ -6,15 +6,14 @@ export default function AppHeader({ timerType }) {
   return (
     <div className={`App-header-${timerType}`}>
       <div class="header">
-        <a href="#default" className="logo">
-          CompanyLogo
-        </a>
+        <Link to="/home" className="logo">
+          Personal Playground
+        </Link>
         <div className="header-right">
           <a className="active" href="/home">
             Home
           </a>
-          <Link to="/settings">Settings</Link>
-          <Link to="#about">About</Link>
+          <Link to="/about">About</Link>
         </div>
       </div>
     </div>

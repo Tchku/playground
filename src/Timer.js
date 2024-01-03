@@ -1,15 +1,22 @@
 import React, { useEffect } from "react";
 import { useTimer } from "react-timer-hook";
 import "./Timer.css";
-import { Button, Group } from "@mantine/core";
+import { Button as MantineButton, Group } from "@mantine/core";
+import styled from "@emotion/styled";
+
+const Button = styled(MantineButton)`
+  &:hover {
+    color: dark;
+    background-color: transparent;
+  }
+`;
 
 function Timer({ timerValue }) {
-  const { seconds, minutes, hours, isRunning, start, pause, resume, restart } =
-    useTimer({
-      timerValue,
-      onExpire: () => console.warn("onExpire called"),
-      autoStart: false,
-    });
+  const { seconds, minutes, hours, start, pause, resume, restart } = useTimer({
+    timerValue,
+    onExpire: () => console.warn("onExpire called"),
+    autoStart: false,
+  });
 
   useEffect(() => {
     restartTimer(false);
@@ -26,10 +33,11 @@ function Timer({ timerValue }) {
       <div className="timerNumbers">
         <span>{hours}</span>:<span>{minutes}</span>:<span>{seconds}</span>
       </div>
+      <p></p>
       <Group position="center">
         <Button
-          variant="subtle"
-          color="dark"
+          variant="default"
+          color="gray.0"
           radius="xs"
           size="xs"
           compact
@@ -38,8 +46,8 @@ function Timer({ timerValue }) {
           Start
         </Button>
         <Button
-          variant="subtle"
-          color="dark"
+          variant="default"
+          color="gray.0"
           radius="xs"
           size="xs"
           compact
@@ -48,8 +56,8 @@ function Timer({ timerValue }) {
           Pause
         </Button>
         <Button
-          variant="subtle"
-          color="dark"
+          variant="default"
+          color="gray.0"
           radius="xs"
           size="xs"
           compact
@@ -58,8 +66,8 @@ function Timer({ timerValue }) {
           Resume
         </Button>
         <Button
-          variant="subtle"
-          color="dark"
+          variant="default"
+          color="gray.0"
           radius="xs"
           size="xs"
           compact

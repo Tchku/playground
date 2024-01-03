@@ -1,13 +1,5 @@
 import "./App.css";
-import {
-  Button,
-  Popover,
-  TextInput,
-  Modal,
-  Stack,
-  Group,
-  Text,
-} from "@mantine/core";
+import { Button, Popover, TextInput, Stack, Group, Text } from "@mantine/core";
 import { useState } from "react";
 import { useDisclosure } from "@mantine/hooks";
 import TaskListItem from "./TaskListItem";
@@ -28,7 +20,6 @@ function TasksList() {
   const [tasks, setTasks] = useState([]);
   // [state, funkcija, kuri leidžia nustatyti state]
   const [inputValue, setInputValue] = useState("");
-  const [toggle, setToggle] = useState(false);
   const [isError, setIsError] = useState(false);
 
   const handleOnInputValueChange = (event) => {
@@ -104,11 +95,13 @@ function TasksList() {
         color="grey"
       >
         <Popover.Target>
-          <Button onClick={popoverOpen}>Add task</Button>
+          <Button variant="default" onClick={popoverOpen} disabled={isError}>
+            Add task
+          </Button>
         </Popover.Target>
         <Popover.Dropdown>
           <Text fz="xs" ta="center" c="black" fw={500}>
-            What are you working on?{" "}
+            What are you working on?
           </Text>
           <p></p>
           <TextInput
@@ -152,15 +145,6 @@ function TasksList() {
         </Popover.Dropdown>
       </Popover>
       <p></p>
-
-      <div>
-        <Group>
-          <Button onClick={() => setToggle(!toggle)}>
-            Toggle Dropdown Markup
-          </Button>
-          {toggle && <Button>This is a button</Button>}
-        </Group>
-      </div>
     </div>
   );
 }

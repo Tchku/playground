@@ -1,11 +1,22 @@
 import React, { useState } from "react";
-import { Button, Group, Input, Modal } from "@mantine/core";
+import { Button, Group, TextInput, Text, Modal } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 
 const TaskListItem = ({ taskTitle, onDeleteClick, onSaveClick }) => {
   const [modalOpened, { open, close }] = useDisclosure(false);
   const [editVisible, setEditVisible] = useState(false);
   const [newInputValue, setNewInputValue] = useState("");
+  const [isNewValueError, setNewValueError] = useState(false);
+
+  const handleNewValueChange = (event) => {
+    console.log(event);
+    if (event.target.value === "") {
+      setNewValueError(true);
+    } else {
+      setNewValueError(false);
+    }
+    setNewInputValue(event.target.value);
+  };
 
   const handleEditClick = () => {
     setEditVisible(true);
@@ -15,11 +26,6 @@ const TaskListItem = ({ taskTitle, onDeleteClick, onSaveClick }) => {
   const handleSaveClick = () => {
     onSaveClick(newInputValue);
     setEditVisible(false);
-  };
-
-  const handleNewValueChange = (event) => {
-    console.log(event);
-    setNewInputValue(event.target.value);
   };
 
   const handleKeyDown = (event) => {
@@ -35,31 +41,42 @@ const TaskListItem = ({ taskTitle, onDeleteClick, onSaveClick }) => {
 
   return (
     <>
+      {isNewValueError && (
+        <Text fz="xs" color="white" ta="left">
+          Please insert your task name
+        </Text>
+      )}
+
       <Group position="apart">
         {editVisible ? (
-          <Input
+          <TextInput
+            size="md"
             value={newInputValue}
             onChange={handleNewValueChange}
             onKeyDown={handleKeyDown}
-          ></Input>
+            error={isNewValueError ? " " : undefined}
+          ></TextInput>
         ) : (
-          <p>{taskTitle}</p>
+          <p>
+            <Text fz="xl">{taskTitle}</Text>
+          </p>
         )}
         <Group>
           {editVisible ? (
             <Button
               variant="subtle"
-              color="gray"
+              color="gray.0"
               radius="xs"
               compact
               onClick={handleSaveClick}
+              disabled={isNewValueError}
             >
               Save
             </Button>
           ) : (
             <Button
               variant="subtle"
-              color="gray"
+              color="gray.0"
               radius="xs"
               compact
               onClick={handleEditClick}
@@ -69,7 +86,7 @@ const TaskListItem = ({ taskTitle, onDeleteClick, onSaveClick }) => {
           )}
           <Button
             variant="subtle"
-            color="gray"
+            color="gray.0"
             radius="xs"
             compact
             onClick={open}

@@ -1,12 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import Layout from "./pages/Layout";
 import Home from "./pages/Home";
-import Settings from "./pages/Settings";
+import About from "./pages/About";
 
 export default function Root() {
   return (
@@ -15,7 +14,7 @@ export default function Root() {
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="home" element={<Home />} />
-          <Route path="settings" element={<Settings />} />
+          <Route path="about" element={<About />} />
         </Route>
       </Routes>
     </BrowserRouter>
