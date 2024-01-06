@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { Button, Group, TextInput, Text, Modal } from "@mantine/core";
+import {
+  Button,
+  Group,
+  TextInput,
+  Text,
+  Modal,
+  FocusTrap,
+} from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 
 const TaskListItem = ({ taskTitle, onDeleteClick, onSaveClick }) => {
@@ -7,6 +14,7 @@ const TaskListItem = ({ taskTitle, onDeleteClick, onSaveClick }) => {
   const [editVisible, setEditVisible] = useState(false);
   const [newInputValue, setNewInputValue] = useState("");
   const [isNewValueError, setNewValueError] = useState(false);
+  const [active, { toggle }] = useDisclosure(false);
 
   const handleNewValueChange = (event) => {
     console.log(event);
@@ -21,6 +29,7 @@ const TaskListItem = ({ taskTitle, onDeleteClick, onSaveClick }) => {
   const handleEditClick = () => {
     setEditVisible(true);
     setNewInputValue(taskTitle);
+    toggle(true);
   };
 
   const handleSaveClick = () => {
@@ -41,6 +50,7 @@ const TaskListItem = ({ taskTitle, onDeleteClick, onSaveClick }) => {
 
   return (
     <>
+      <FocusTrap active={active}></FocusTrap>
       {isNewValueError && (
         <Text fz="xs" color="white" ta="left">
           Please insert your task name
@@ -55,6 +65,7 @@ const TaskListItem = ({ taskTitle, onDeleteClick, onSaveClick }) => {
             onChange={handleNewValueChange}
             onKeyDown={handleKeyDown}
             error={isNewValueError ? " " : undefined}
+            data-autofocus
           ></TextInput>
         ) : (
           <p>
@@ -107,7 +118,7 @@ const TaskListItem = ({ taskTitle, onDeleteClick, onSaveClick }) => {
         <Group position="center">
           <Button
             onClick={handleTaskDeletion}
-            variant="outline"
+            variant="subtle"
             color="red"
             size="xs"
             radius="md"
@@ -116,7 +127,7 @@ const TaskListItem = ({ taskTitle, onDeleteClick, onSaveClick }) => {
           </Button>
           <Button
             onClick={close}
-            variant="outline"
+            variant="subtle"
             color="gray"
             size="xs"
             radius="md"
