@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useTimer } from "react-timer-hook";
 import "./Timer.css";
 import { Group } from "@mantine/core";
+import { IconPlayerPlayFilled } from "@tabler/icons-react";
 
 const ButtonComponent = ({ startAction, buttonName }) => {
   const [isClicked, setIsClicked] = useState(false);

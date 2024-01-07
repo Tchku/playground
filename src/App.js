@@ -1,22 +1,14 @@
 import "./App.css";
 import { useState } from "react";
-import { Button as MantineButton, Group, Divider, Text } from "@mantine/core";
+import { Group, Divider, Text } from "@mantine/core";
 import {
   IconCoffee,
   IconRotateRectangle,
   IconFileDescription,
 } from "@tabler/icons-react";
-import styled from "@emotion/styled";
 import AppHeader from "./AppHeader";
 import TasksList from "./TasksList";
 import Timer from "./Timer";
-
-const Button = styled(MantineButton)`
-  &:hover {
-    color: dark;
-    background-color: transparent;
-  }
-`;
 
 const timerTypes = {
   work: "work",
@@ -66,36 +58,6 @@ export default function App() {
         <div className={timerContainerClassNames[timerType]}>
           <div>
             <Group position="center" gap="m">
-              <Button
-                compact
-                variant="subtle"
-                color="dark"
-                size="md"
-                radius="md"
-                onClick={workClick}
-              >
-                Work
-              </Button>
-              <Button
-                compact
-                variant="subtle"
-                color="dark"
-                size="l"
-                radius="md"
-                onClick={shortBreakClick}
-              >
-                Short Break
-              </Button>
-              <Button
-                compact
-                variant="subtle"
-                color="dark"
-                size="md"
-                radius="md"
-                onClick={longBreakClick}
-              >
-                Long Break
-              </Button>
               <button className="Button" onClick={workClick}>
                 Work
               </button>
@@ -106,9 +68,7 @@ export default function App() {
                 Long Break
               </button>
             </Group>
-
             <Divider my="sm" />
-
             <Timer timerValue={minutes[timerType]} />
             <p>
               <Group position="center">

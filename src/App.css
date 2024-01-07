@@ -4,7 +4,7 @@
 
 .App-body-work {
   background-color: #d14646;
-  min-height: 88vh;
+  height: 88vh;
   display: flex;
   flex-direction: column;
   align-items: center;
