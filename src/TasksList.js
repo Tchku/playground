@@ -5,25 +5,15 @@ import { useDisclosure } from "@mantine/hooks";
 import TaskListItem from "./TaskListItem";
 import { IconChecklist } from "@tabler/icons-react";
 
-// KLAUSIMAI: 1. Kuo skirasi useState ir useDisclosure?
-//Eventas (e) yra objektas. Jis kaip objektas turi parametrus ir values
-// PASIŽIŪRĖTI OPERATORIUS BŪTINAI: && (and); || (or);
-// Edgecase?
-
 function TasksList() {
-  // const [boolean reikšmė, {objektas su open ir close properčiais, iš pavadinimų galima nuspėti, kad bus funkcijos}] <- [laužtinis skliaustas indikuoja masyvą su dviem elementais]
-  // const modalHandler = useDisclosure(false); <- kitas būdas kaip parašyti 8 eilutę
-  // useDisclosure(false) užnaudija hooką ir uždefinina modalo state
-
   const [popoverOpened, { open: popoverOpen, close: popoverClose }] =
     useDisclosure(false);
   const [tasks, setTasks] = useState([]);
-  // [state, funkcija, kuri leidžia nustatyti state]
   const [inputValue, setInputValue] = useState("");
   const [isError, setIsError] = useState(false);
 
   const handleOnInputValueChange = (event) => {
-    console.log(event); //kam šita eilutė reikalinga?
+    console.log(event);
     if (event.target.value === "") {
       setIsError(true);
     } else {
@@ -38,7 +28,6 @@ function TasksList() {
       return;
     }
     setTasks([...tasks, inputValue]);
-    // const taskList3 = [...taskList1];
     setInputValue("");
     popoverClose();
   };
@@ -54,10 +43,6 @@ function TasksList() {
     newTaskList[index] = value;
     setTasks(newTaskList);
   };
-
-  // const handleSaveClick = (value) => {
-  //   handleTaskEdit(index, value);
-  // }
 
   const handlePopoverClose = () => {
     popoverClose();

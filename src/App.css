@@ -39,9 +39,6 @@
   min-width: 50vh;
   background-color: #e06262;
   border-radius: 5px;
-  &:hover {
-    cursor: pointer;
-  }
   padding: 12px;
   padding-top: 6px;
 }
@@ -70,4 +67,23 @@
 
 .App-link {
   color: #61dafb;
+}
+
+.Button {
+  min-width: 5.5vh;
+  background-color: transparent;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  font-size: 1rem;
+  font-weight: 500;
+  border: none;
+  font-family: Segoe UI;
+  color: black;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+.Button:hover {
+  cursor: pointer;
+  color: #fff;
+  background-color: transparent;
 }

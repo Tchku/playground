@@ -96,6 +96,15 @@ export default function App() {
               >
                 Long Break
               </Button>
+              <button className="Button" onClick={workClick}>
+                Work
+              </button>
+              <button className="Button" onClick={shortBreakClick}>
+                Short Break
+              </button>
+              <button className="Button" onClick={longBreakClick}>
+                Long Break
+              </button>
             </Group>
 
             <Divider my="sm" />

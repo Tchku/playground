@@ -112,8 +112,6 @@ const TaskListItem = ({ taskTitle, onDeleteClick, onSaveClick }) => {
         title="Are you sure you want to delete?"
         centered
       >
-        {/* <Modal opened={modalHandler[0]} onClose={modalHandler[1].close} title="Enter task"></Modal> */}
-
         <p></p>
         <Group position="center">
           <Button
@@ -141,9 +139,3 @@ const TaskListItem = ({ taskTitle, onDeleteClick, onSaveClick }) => {
 };
 
 export default TaskListItem;
-
-/*
-1. pasidaryti 'Are you sure you want to delete?' modalą
-2. pasidaryti 'Edit mygtuką' - edit mygtukas pakeičia stringą į inputą. jeigu esc paspaudi - tai viskas grįžta į savo vėžias. Jeigu editini ir spaudi enter, tai pakeistas inputas išsisaugotų
-3. pasidaryti "Enter" klavišo funkcionalumą, kai paspaudi "Create"
-*/

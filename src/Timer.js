@@ -1,15 +1,28 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useTimer } from "react-timer-hook";
 import "./Timer.css";
-import { Button as MantineButton, Group } from "@mantine/core";
-import styled from "@emotion/styled";
+import { Group } from "@mantine/core";
 
-const Button = styled(MantineButton)`
-  &:hover {
-    color: dark;
-    background-color: transparent;
-  }
-`;
+const ButtonComponent = ({ startAction, buttonName }) => {
+  const [isClicked, setIsClicked] = useState(false);
+
+  const handleClick = () => {
+    setIsClicked(true);
+    setTimeout(() => {
+      setIsClicked(false);
+    }, 50);
+    startAction();
+  };
+
+  return (
+    <button
+      onClick={handleClick}
+      className={`timerButton ${isClicked ? "clicked" : ""}`}
+    >
+      {buttonName}
+    </button>
+  );
+};
 
 function Timer({ timerValue }) {
   const { seconds, minutes, hours, start, pause, resume, restart } = useTimer({
@@ -35,46 +48,13 @@ function Timer({ timerValue }) {
       </div>
       <p></p>
       <Group position="center">
-        <Button
-          variant="default"
-          color="gray.0"
-          radius="xs"
-          size="xs"
-          compact
-          onClick={start}
-        >
-          Start
-        </Button>
-        <Button
-          variant="default"
-          color="gray.0"
-          radius="xs"
-          size="xs"
-          compact
-          onClick={pause}
-        >
-          Pause
-        </Button>
-        <Button
-          variant="default"
-          color="gray.0"
-          radius="xs"
-          size="xs"
-          compact
-          onClick={resume}
-        >
-          Resume
-        </Button>
-        <Button
-          variant="default"
-          color="gray.0"
-          radius="xs"
-          size="xs"
-          compact
-          onClick={restartTimer}
-        >
-          Restart
-        </Button>
+        <ButtonComponent buttonName="Start" startAction={() => start()} />
+        <ButtonComponent buttonName="Pause" startAction={() => pause()} />
+        <ButtonComponent buttonName="Resume" startAction={() => resume()} />
+        <ButtonComponent
+          buttonName="Restart"
+          startAction={() => restartTimer()}
+        />
       </Group>
     </div>
   );
