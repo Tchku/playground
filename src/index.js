@@ -9,7 +9,7 @@ import About from "./pages/About";
 
 export default function Root() {
   return (
-    <BrowserRouter basename="/playground">
+    <BrowserRouter basename="/home">
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
